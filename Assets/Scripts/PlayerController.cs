@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
             transform.LookAt(hit.point);
 
             //Only rotate along the y axis to look at the object
-            transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
+           // transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
 
         }
 
