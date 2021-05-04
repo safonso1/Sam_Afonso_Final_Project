@@ -26,7 +26,7 @@ public class LimitScript : MonoBehaviour
     {
 
         //If the enemy reaches a limit
-        if (other.tag == "Enemy")
+        if (other.tag == "EnemyDragon")
         {
 
             //The player loses a point for the score which is stored in the game manager script attached to the game manager object

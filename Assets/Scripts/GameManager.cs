@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    public TextMeshProUGUI scoreText;
 
     //Reference to the enemy game object
     public GameObject enemy;
@@ -46,6 +48,9 @@ public class GameManager : MonoBehaviour
 
         //NOTE: This is temporary in order to test spawning enemies before UI with proper game start is done
         StartCoroutine(SpawnEnemy());
+        score = 0;
+        UpdateScore(0);
+        
 
     }
 
@@ -76,10 +81,18 @@ public class GameManager : MonoBehaviour
 
             //Spawn the enemy with established position and rotation
             Instantiate(enemy, SpawnPos[picked], Quaternion.Euler(0, rotation, 0));
-
         }
 
     }
+            
+            
+           void UpdateScore(int scoreToAdd)
+           {
+                score += scoreToAdd;
+                scoreText.text = "Score: " + score;
+            }
+
+        
 
     //Sets up potential vectors for where an enemy will spawn and then picks one
     int setupSpawnVector()

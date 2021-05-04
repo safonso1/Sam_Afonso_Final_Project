@@ -5,12 +5,12 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
 
-    //Float variable that stores the speed at which the projectile moves
-    private float speed = 15.0f;
+    //Float variable that stores the speed at which the enemy moves
+    private float speed = 0.0f;
 
 
 
-    //Game initialization
+    //Game Initialization
     void Start()
     {
 
@@ -18,12 +18,32 @@ public class EnemyManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+    //Every frame
     void Update()
     {
 
-        //Move the projectile forward by the speed set
+        speed = GameObject.Find("GameManager").GetComponent<GameManager>().speed;
+
+        //Move the enemy forward by the speed set
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
 
     }
+
+    //Upon collision
+    private void OnTriggerEnter(Collider other)
+    {
+
+        //If the enemy is hit by the players spell
+        if (other.tag == "Fireball")
+        {
+
+            //The player gains a point for the score which is stored in the game manager script attached to the game manager object
+            GameObject.Find("GameManager").GetComponent<GameManager>().score++;
+
+            //Destroy the enemy
+            Destroy(gameObject);
+
+        }
+    }
+
 }
