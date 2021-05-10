@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI titleText;
+    public Button startButton;
+    public TextMeshProUGUI gameOverText;
+    public bool gameNotOver = false;
 
     //Reference to the enemy game object
     public GameObject enemy;
@@ -49,17 +54,17 @@ public class GameManager : MonoBehaviour
         //NOTE: This is temporary in order to test spawning enemies before UI with proper game start is done
         StartCoroutine(SpawnEnemy());
         score = 0;
-        UpdateScore(0);
-        
-
     }
 
     //Every frame
     void Update()
     {
+        if (gameNotOver)
+        {
 
-        //Placeholder
-
+            updateScore();
+            if (score < 0) { gameOverText.gameObject.SetActive(true); }
+        }
     }
 
     //Coroutine called to spawn enemies around the screen
@@ -67,7 +72,7 @@ public class GameManager : MonoBehaviour
     {
 
         //NOTE: Temporarily infinite until proper game start
-        while (true)
+        while (gameNotOver)
         {
 
             //Wait for however much time the spawn rate currently is
@@ -84,15 +89,30 @@ public class GameManager : MonoBehaviour
         }
 
     }
-            
-            
-           void UpdateScore(int scoreToAdd)
-           {
-                score += scoreToAdd;
-                scoreText.text = "Score: " + score;
-            }
 
+
+    void updateScore()
+    {
+
+        //If the game is not over
         
+
+            //Set the score text to reflect the current score variable
+            scoreText.text = "Score: " + score;
+
+            //If the score reaches the negatives
+            if (score < 0)
+            {
+
+                //Show score as 0
+                scoreText.text = "Score: 0";
+            //Display End Game Here
+            gameNotOver = false;
+            gameOverText.gameObject.SetActive(true);
+            }
+    }
+
+
 
     //Sets up potential vectors for where an enemy will spawn and then picks one
     int setupSpawnVector()
@@ -188,6 +208,20 @@ public class GameManager : MonoBehaviour
 
         //Send the current spawnrate to the spawn enemy coroutine
         return spawnRate;
+
+    }
+    public void StartGame()
+    {
+
+        //Turn off the title screen UI elements)
+        titleText.gameObject.SetActive(false);
+        startButton.gameObject.SetActive(false);
+        gameNotOver = true;
+
+        //Start spawning enemies
+        StartCoroutine(SpawnEnemy());
+
+        //NOTE: The game variable isGameOver should automatically be set to false upon the scene starting or restarting
 
     }
 

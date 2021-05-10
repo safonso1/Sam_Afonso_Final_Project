@@ -20,26 +20,29 @@ public class PlayerController : MonoBehaviour
     private float fireRate = 0.5f;
     private float nextFire = 0.0f;
 
+    private GameManager gameManagerScript;
+
 
 
     //Game Initializations
     void Start()
     {
 
-        //Placeholder for potential Start functions
+        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 
     }
 
     //Every frame
     void Update()
     {
+        if (gameManagerScript.gameNotOver)
+        {
+            //Manage player movement for this frame
+            playerMovement();
 
-        //Manage player movement for this frame
-        playerMovement();
-
-        //Check if player wants to cast a spell, if they do then manage that
-        castSpell();
-
+            //Check if player wants to cast a spell, if they do then manage that
+            castSpell();
+        }
     }
 
     //Manages the player movement, meaning both turning and limiting how far the player can go

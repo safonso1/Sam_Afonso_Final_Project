@@ -24,14 +24,14 @@ public class LimitScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
+        
         //If the enemy reaches a limit
         if (other.tag == "EnemyDragon")
         {
 
             //The player loses a point for the score which is stored in the game manager script attached to the game manager object
             GameObject.Find("GameManager").GetComponent<GameManager>().score--;
-
+            Debug.Log("Test");
         }
 
         //Destroy both enemies and spells when they hit the wall
